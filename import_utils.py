@@ -1,0 +1,148 @@
+import pandas as pd
+import requests
+import csv
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+API_KEY = os.getenv("OMDB_API_KEY")
+OMDB_URL = "http://www.omdbapi.com/"
+
+INPUT_MD_FILE = "imdb_ratings.md"
+OUTPUT_MD_FILE = "imdb_ratings_with_posters.md"
+
+def import_file(filename):
+    #TODO: add universal import
+    pass
+
+def export_file(filename, format):
+    #TODO: add universal export
+    pass
+def imdb_csv_to_md():
+    # Загружаем CSV (замени путь на свой файл)
+    csv_file = "ratings.csv"
+    # df = pd.read_csv(csv_file, delimiter="\t")  # IMDb экспортирует в TSV
+    df = pd.read_csv(csv_file, sep=",")  # Указываем, что разделитель — запятая
+    # Выбираем нужные столбцы
+    columns = {
+        "Title": "Title",
+        "Year": "Year",
+        "IMDb Rating": "IMDb Rating",
+        "Your Rating": "Your Rating",
+        "Title Type": "Title Type",
+        "Genres": "Genres",
+        "Num Votes": "Num Votes",
+        "Directors": "Directors"
+    }
+
+    df = df[list(columns.keys())].rename(columns=columns)
+
+    # TODO: Добавить флаг для форматирования в маркдаун со звёздочками
+    # Добавляем звездочки к оценкам
+    # df["IMDb Rating"] = df["IMDb Rating"].apply(lambda x: f"{x} ⭐")
+    # df["Your Rating"] = df["Your Rating"].apply(lambda x: f"{x} ⭐")
+
+    # Преобразуем в Markdown
+    md_table = df.to_markdown(index=False)
+    md_table = md_table.replace("|:", "| ").replace(":|", " |").replace(":-", "--")
+
+    # Сохраняем в файл
+    with open("imdb_ratings.md", "w", encoding="utf-8") as f:
+        f.write(md_table)
+
+    print("✅ Таблица IMDb сохранена в imdb_ratings.md!")
+
+    # TODO: Пофиксить двоеточия в первой стрчоке прим.: |:------
+    
+def read_markdown_files(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        
+    lines = [line.strip() for line in lines if not set(line.strip()) == {"|",  "-", " "}]
+    reader = csv.reader(lines, delimiter="|")
+    
+    table = [list(map(str.strip, elem[1:-1])) for elem in reader]
+    
+    headers = table[0]
+    rows = table[1:]
+    return headers, rows
+
+def get_movie_poster(title, year=None, movie_type=None):
+    params = {"t": title, "apikey": API_KEY}
+    if year:
+        params["y"] = year
+    if movie_type:
+        params["type"] = movie_type.lower() 
+        
+    response = requests.get(OMDB_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get("Response") == "True":
+            return data.get("Poster")
+    
+    # Убираем movie_type и пробуем снова
+    params.pop("type", None)
+    response = requests.get(OMDB_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get("Response") == "True":
+            return data.get("Poster")
+    
+    # Убираем год и пробуем только по названию
+    params.pop("y", None)
+    response = requests.get(OMDB_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get("Response") == "True":
+            return data.get("Poster")
+    
+    return "None"
+
+def write_markdown_file(output_file, headers, rows):
+    header_line = "| " + " | ".join(headers) + " |"
+    separator_line = "| " + " | ".join(["-" * len(h) for h in headers]) + " |"
+    
+    data_lines = ["| " + " | ".join(row) + " |" for row in rows]
+    
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("\n".join([header_line, separator_line] + data_lines) + "\n")
+
+def add_posters_and_save_to_md():
+    headers, rows = read_markdown_files(INPUT_MD_FILE)  
+    title_index = headers.index("Title")
+    year_index = headers.index("Year")
+    movie_type_index = headers.index("Title Type")
+    headers.insert(headers.index("Title") + 1, "Poster")
+
+    for row in rows:
+        title = row[title_index]
+        year = row[year_index]
+        movie_type = row[movie_type_index]
+
+        poster_url = get_movie_poster(title, year, movie_type)
+        row.insert(title_index + 1, f'<img src="{poster_url}" width="100">')
+
+    write_markdown_file(OUTPUT_MD_FILE, headers, rows)  
+
+def fix_broken_posters():
+    headers, rows = read_markdown_files(INPUT_MD_FILE)  
+    title_index = headers.index("Title")
+    poster_index = headers.index("Poster")
+    year_index = headers.index("Year")
+    movie_type_index = headers.index("Title Type") 
+     
+    
+    for row in rows:
+        title = row[title_index]
+        year = row[year_index]
+        movie_type = row[movie_type_index]
+
+        if "None" in row[poster_index]:
+            poster_url = get_movie_poster(title, year, movie_type)
+            row[poster_index] = f'<img src="{poster_url}" width="100">'
+
+    write_markdown_file(OUTPUT_MD_FILE, headers, rows)               
+
+fix_broken_posters()
+# add_posters_and_save_to_md()
