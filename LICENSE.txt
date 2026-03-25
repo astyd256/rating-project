@@ -1,0 +1,21 @@
+MIT License
+
+Copyright (c) [2026] astyd256
+
+Русская версия
+
+Разрешается бесплатно любому лицу, получившему копию этого программного обеспечения и сопутствующей документации (в дальнейшем — "Программное обеспечение"), использовать Программное обеспечение, включая право запускать, копировать, изменять, сливать, публиковать, распространять, сублицензировать и/или продавать копии Программного обеспечения, при условии сохранения везде в исходных файлах и в бинарных дистрибутивах указанного уведомления об авторских правах и этого текста лицензии.
+
+ВАЖНО: Данное публичное распространение разрешено только для некоммерческого использования или для использования в рамках условий лицензии MIT. Коммерческое использование Программного обеспечения (включая, но не ограничиваясь: интеграцией в коммерческие продукты, предоставлением услуги на его основе, продажей продуктов/услуг, основанных на Программном обеспечении, или получением иной финансовой выгоды) требует отдельного письменного разрешения автора/правообладателя и оформления коммерческой лицензии. Пожалуйста, свяжитесь с astyd637@gmail.com для запроса коммерческой лицензии.
+
+ОТКАЗ ОТ ГАРАНТИЙ:
+ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ "КАК ЕСТЬ", БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; ВКЛЮЧАЯ НЕПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ ИЛИ ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЁННЫХ ЦЕЛЕЙ. В НИКАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ДЕРЖАТЕЛИ АВТОРСКИХ ПРАВ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ЗА ЛЮБЫЕ ИСКИ, ПОТЕРИ ИЛИ ИНЫЕ ОБЯЗАТЕЛЬСТВА, ВОЗНИКШИЕ ИЗ ИСПОЛЬЗОВАНИЯ ИЛИ НЕВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ.
+
+English version
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software including the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following condition: the above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+IMPORTANT: This public distribution is permitted only for non-commercial use or for use under the terms of the MIT License. Commercial use of the Software (including but not limited to: integration into commercial products, providing services based on the Software, selling products/services derived from the Software, or otherwise obtaining financial gain) requires separate written permission from the author/copyright holder and the conclusion of a commercial license. Please contact astyd637@gmail.com to request a commercial license.
+
+DISCLAIMER OF WARRANTIES:
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

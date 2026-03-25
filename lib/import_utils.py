@@ -5,6 +5,11 @@ import csv
 from dotenv import load_dotenv
 import os
 
+import sqlite3
+import re
+from pathlib import Path
+from typing import Optional, Tuple
+
 load_dotenv()
 API_KEY = os.getenv("OMDB_API_KEY")
 OMDB_URL = "http://www.omdbapi.com/"
@@ -19,6 +24,61 @@ def import_file(filename):
 def export_file(filename, format):
     #TODO: add universal export
     pass
+
+def parse_md_row(line: str) -> Optional[Tuple]:
+    cols = [col.strip() for col in line.split('|')[1:-1]]
+    if len(cols) < 9:
+        return None
+    
+    # Достаем URL из тега <img>
+    poster_match = re.search(r'src="([^"]+)"', cols[1])
+    poster_url = poster_match.group(1) if poster_match else None
+    
+    # Очищаем рейтинги от звезд и других символов
+    imdb_rating_clean = re.sub(r'[^0-9.]', '', cols[3].split()[0]) if cols[3] else ''
+    your_rating_clean = re.sub(r'[^0-9.]', '', cols[4].split()[0]) if cols[4] else ''
+    
+    try:
+        data = (
+            cols[0],
+            poster_url,
+            int(cols[2]) if cols[2] else None,
+            float(imdb_rating_clean) if imdb_rating_clean else None,
+            int(float(your_rating_clean)) if your_rating_clean else None,
+            cols[5],
+            cols[6],
+            int(cols[7].replace(',', '')) if cols[7].replace(',', '').isdigit() else 0,
+            cols[8]
+        )
+    except (ValueError, IndexError):
+        return None
+    return data
+
+def import_from_md(md_path: str, db_path: str = "movies.db") -> int:
+    p = Path(md_path)
+    if not p.exists():
+        raise FileNotFoundError(f"File not found: {md_path}")
+    inserted = 0
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    with p.open('r', encoding='utf-8') as f:
+        lines = f.readlines()
+    for line in lines[2:]:
+        line = line.strip()
+        if not line or line.startswith('| --'):
+            continue
+        row = parse_md_row(line)
+        if not row:
+            continue
+        cursor.execute('''
+            INSERT INTO movies (title, poster_url, year, imdb_rating, your_rating, title_type, genres, num_votes, directors)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', row)
+        inserted += 1
+    conn.commit()
+    conn.close()
+    return inserted
+
 def imdb_csv_to_md():
     # Загружаем CSV (замени путь на свой файл)
     csv_file = "ratings.csv"
@@ -144,5 +204,5 @@ def fix_broken_posters():
 
     write_markdown_file(OUTPUT_MD_FILE, headers, rows)               
 
-fix_broken_posters()
+# fix_broken_posters()
 # add_posters_and_save_to_md()
