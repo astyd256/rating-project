@@ -17,7 +17,7 @@ This is my pet-project's tools for working with massive amounts of data for view
 
 - Movies/anime -  [IMDB](https://www.imdb.com/) (partially)
 - Steam games - **TBA**
-- 
+- Music files - **TBA**
 
 
 
@@ -29,18 +29,23 @@ This is my pet-project's tools for working with massive amounts of data for view
 - TBA
 
 ## Features plan
-- [ ] Move flow to one cli
-  - [ ] Port cli to html
+- [x] **CRITICAL**
+  - [x] **Fix proper workflow in cli so it is init db for all data -> html export** 
+- [x] Move all wroking tools to one cli
+  - [x] Move create_html to cli
 - [ ] Finish Readme
 - [x] Add license
 - [ ] Bake images into html
 - [ ] Add Import for:
-  - [ ] Markdown files
+  - [ ] ~~Markdown files~~
   - [ ] CSV movie list
   - [ ] xml anime/manga list
   - [ ] game (unknown) file
+  - [ ] music files mediadata scraping
 - [ ] Add Export for:
-  - [ ] Markdown files
+  - [ ] Markdown files (from universal db/xml)
   - [ ] CSV movie list
   - [ ] xml anime/manga list
   - [ ] game (unknown) file
+  - [ ] music files mediadata scraping
+- [ ] Add required modules to requirements.txt

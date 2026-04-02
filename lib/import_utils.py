@@ -12,18 +12,10 @@ from typing import Optional, Tuple
 
 load_dotenv()
 API_KEY = os.getenv("OMDB_API_KEY")
-OMDB_URL = "http://www.omdbapi.com/"
+OMDB_URL = "http://www.omdbapi.com/" #TODO maybe remove this an all instances
 
 INPUT_MD_FILE = "imdb_ratings.md"
 OUTPUT_MD_FILE = "imdb_ratings_with_posters.md"
-
-def import_file(filename):
-    #TODO: add universal import
-    pass
-
-def export_file(filename, format):
-    #TODO: add universal export
-    pass
 
 def parse_md_row(line: str) -> Optional[Tuple]:
     cols = [col.strip() for col in line.split('|')[1:-1]]
@@ -54,7 +46,7 @@ def parse_md_row(line: str) -> Optional[Tuple]:
         return None
     return data
 
-def import_from_md(md_path: str, db_path: str = "movies.db") -> int:
+def import_from_md(md_path: str, db_path: str) -> int:
     p = Path(md_path)
     if not p.exists():
         raise FileNotFoundError(f"File not found: {md_path}")
@@ -78,6 +70,10 @@ def import_from_md(md_path: str, db_path: str = "movies.db") -> int:
     conn.commit()
     conn.close()
     return inserted
+
+#---------------------------------------------------------
+# Unredacted tools
+# TODO: Rewrote these:
 
 def imdb_csv_to_md():
     # Загружаем CSV (замени путь на свой файл)

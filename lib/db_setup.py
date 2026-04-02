@@ -1,6 +1,6 @@
 import sqlite3
 
-def init_db(db_path: str = "movies.db") -> None:
+def init_db(db_path: str) -> None: #TODO: Add other types
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute('''
@@ -20,6 +20,7 @@ def init_db(db_path: str = "movies.db") -> None:
     conn.commit()
     conn.close()
 
+# TODO: check if SQLAlchemy should be applicable at any capacity 
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 # from models import Base

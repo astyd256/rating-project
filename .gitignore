@@ -1,5 +1,7 @@
 .env
 *.db
+*.xml
+*.html
 data/
 venv/
 games.md
