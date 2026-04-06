@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS movies (
     poster_url TEXT,
     year INTEGER,
     imdb_rating REAL,
-    your_rating INTEGER,
+    rating INTEGER,
     title_type TEXT,
     genres TEXT,
     num_votes INTEGER,
@@ -46,7 +46,7 @@ for line in lines[2:]:  # Пропускаем первые две строки 
 
         # Очищаем рейтинги от звезд и других символов
         imdb_rating_clean = re.sub(r'[^0-9.]', '', columns[3].split()[0])
-        your_rating_clean = re.sub(r'[^0-9.]', '', columns[4].split()[0])
+        rating_clean = re.sub(r'[^0-9.]', '', columns[4].split()[0])
 
         # Подготовка данных для вставки
         data = (
@@ -54,7 +54,7 @@ for line in lines[2:]:  # Пропускаем первые две строки 
             poster_url,                     # poster_url
             int(columns[2]),                # year
             float(imdb_rating_clean) if imdb_rating_clean else None,  # imdb_rating
-            int(float(your_rating_clean)) if your_rating_clean else None,  # your_rating (преобразуем float в int)
+            int(float(rating_clean)) if rating_clean else None,  # rating (преобразуем float в int)
             columns[5],                     # title_type
             columns[6],                     # genres
             int(columns[7].replace(',', '')) if columns[7].replace(',', '').isdigit() else 0,  # num_votes (убираем запятые)
@@ -63,7 +63,7 @@ for line in lines[2:]:  # Пропускаем первые две строки 
 
         # Вставляем данные в таблицу
         cursor.execute('''
-            INSERT INTO movies (title, poster_url, year, imdb_rating, your_rating, title_type, genres, num_votes, directors)
+            INSERT INTO movies (title, poster_url, year, imdb_rating, rating, title_type, genres, num_votes, directors)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', data)
         

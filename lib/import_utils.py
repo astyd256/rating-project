@@ -28,7 +28,7 @@ def parse_md_row(line: str) -> Optional[Tuple]:
     
     # Очищаем рейтинги от звезд и других символов
     imdb_rating_clean = re.sub(r'[^0-9.]', '', cols[3].split()[0]) if cols[3] else ''
-    your_rating_clean = re.sub(r'[^0-9.]', '', cols[4].split()[0]) if cols[4] else ''
+    rating_clean = re.sub(r'[^0-9.]', '', cols[4].split()[0]) if cols[4] else ''
     
     try:
         data = (
@@ -36,7 +36,7 @@ def parse_md_row(line: str) -> Optional[Tuple]:
             poster_url,
             int(cols[2]) if cols[2] else None,
             float(imdb_rating_clean) if imdb_rating_clean else None,
-            int(float(your_rating_clean)) if your_rating_clean else None,
+            int(float(rating_clean)) if rating_clean else None,
             cols[5],
             cols[6],
             int(cols[7].replace(',', '')) if cols[7].replace(',', '').isdigit() else 0,
@@ -63,7 +63,7 @@ def import_from_md(md_path: str, db_path: str) -> int:
         if not row:
             continue
         cursor.execute('''
-            INSERT INTO movies (title, poster_url, year, imdb_rating, your_rating, title_type, genres, num_votes, directors)
+            INSERT INTO movies (title, poster_url, year, imdb_rating, rating, title_type, genres, num_votes, directors)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', row)
         inserted += 1

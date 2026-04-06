@@ -3,6 +3,7 @@ import sqlite3
 def init_db(db_path: str) -> None: #TODO: Add other types
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
+    #Movies
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS movies (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,11 +11,22 @@ def init_db(db_path: str) -> None: #TODO: Add other types
         poster_url TEXT,
         year INTEGER,
         imdb_rating REAL,
-        your_rating INTEGER,
+        rating REAL,
         title_type TEXT,
         genres TEXT,
         num_votes INTEGER,
         directors TEXT
+    )
+    ''')
+    #Music
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS music (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        album TEXT,
+        artist TEXT,
+        album_art BLOB,         -- хранение байтов изображения
+        rating REAL    -- можно хранить в INTEGER (или BIGINT/INT64 при необходимости)
     )
     ''')
     conn.commit()
