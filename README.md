@@ -1,9 +1,9 @@
 # Rating-project
 
-- [TL:DR](#tldr)
-- [Usage](#usage)
-- [Requirements](#requirements)
-- [Features plan](#plan)
+  - [TL:DR](#tldr)
+  - [Usage](#usage)
+  - [Supported services](#supported-services)
+  - [Features](#features)
 
 ## TL:DR
 This is my pet-project's tools for working with massive amounts of data for viewed titles, listened music  potentially database backend for a (potentially web) client (and probably my personal blog) for storing rating for games, movies and shows (and probably lots more of staff too)
@@ -40,36 +40,33 @@ Notes:
 - Steam games - **TBA**
 - Music files - **WIP**
 
-
-
-
-## Requirements
-
-
-
 ## Features
--  **CLI functions**
--  Creating html site from db data 
--  Movies .md specific format import [exmaple](./examples/imdb_ratings.md) (was hoping to add it all to obsidian but the idea is scraped now, maybe will come back to it later):
-- [x] **Bake images into html** (hope will work for metadata for now)
-  - [ ] Works with
-- [ ] **ADD DB Interface FOR MIGRATION** (Django)
-- [ ] Add Import for:
-  - [ ] ~~Markdown files~~
-  - [ ] JSON files
-  - [ ] CSV movie list
-  - [ ] xml anime/manga list
-  - [ ] game (unknown) files
+-  **CLI functionality**
+- [ ] **Bake images into html** (hope will work for metadata for now)
+- [ ] Change license 
+  - [x] music bee mp3 image metadata
+  - [x] FLAC
+- [ ] DB:
+  - [x] Add DB interface (SQLALchemy)
+  - [ ] Migrations
+- [ ] Import:
+  - [ ] Movies
+    - [x] Markdown [exmaple](./examples/imdb_ratings.md)
+      - [ ] **Fix posters**
+    - [ ] CSV (IMDB format)
+  - [ ] Anime/Manga
+    - [ ] xml
+  - [ ] game (unknown)
   - [x] music files mediadata scraping
-- [ ] Add Export for:
-  - [ ] JSON format
-  - [ ] Markdown files (from universal db/xml)
-  - [ ] CSV movie list
-  - [ ] xml anime/manga list
-  - [ ] game (unknown) files
-- [ ] Add type (music, game, etc) export/import
-- [ ] Add required modules to requirements.txt
+  - [ ] ANY
+    - [ ] JSON files
+- [ ] Export:
+  - [ ] Markdown?
+  - [ ] Html site
+    - [ ] **Add lazy loading**
+    - [ ] Make it less hardcoded
+  - [ ] JSON
+  - [ ] CSV (IMDB format)
+  - [ ] xml anime/manga (MAL format)
+  - [ ] games (unknown format)
 - [ ] CLI UI interface
-- [ ] Re add converter IMDB .csv to .md from tools 
-- [ ] Add doc
-- [ ] Finish Readme

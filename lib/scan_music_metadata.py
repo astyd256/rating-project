@@ -107,9 +107,9 @@ def compress_album_art(apic_data, max_size=200, quality=75, fmt='WEBP'):
         img = Image.open(BytesIO(apic_data)).convert('RGBA')
     except Exception:
         return apic_data
-    # вписать в квадрат max_size x max_size, сохраняя пропорции
+
     img.thumbnail((max_size, max_size), Image.LANCZOS)
-    # если нужно убрать альфу для JPEG
+    
     out = BytesIO()
     if fmt.upper() == 'JPEG':
         bg = Image.new('RGB', img.size, (255, 255, 255))
